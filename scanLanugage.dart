@@ -17,7 +17,13 @@ class ScanLanguage {
 
   Future<List<File>> entitiesToFiles(String path) async {
     ///[Path] is the diractory path you wish to scan
-    final dir = Directory(path);
+    Directory? dir;
+    try {
+       dir = Directory(path);
+    } catch (e) {
+      throw Exception(path +" doesnt exist");
+      exit(1);
+    }
     final entities = await this.dirContents(dir);
 
     return entities.map((entity) {
